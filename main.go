@@ -10,9 +10,9 @@ import (
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi there, I am very keen on %s!", r.URL.Path[1:])
 	success, error := controller.ReadFileController()
+	fmt.Fprintf(w, "O status da leitura é:%v ", success)
 	if success {
-		fmt.Fprintf(w, "\nsucesso")
-		return
+		return fmt.Fprintf(w, "\nsucesso")
 	}
 
 	fmt.Fprintf(w, fmt.Sprint(error))

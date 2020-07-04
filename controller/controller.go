@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"fmt"
 
 	dao "github.com/dougadriquei/desafioneoway/dao/purchase"
 	domain "github.com/dougadriquei/desafioneoway/domain/readfile"
@@ -12,6 +13,7 @@ import (
 func ReadFileController() (bool, []error) {
 	var error []error
 
+	fmt.Println("Passou 1")
 	//Faz a leitura do arquivo: base_teste.txt
 	csvfile := util.OpenFile("resource/base_teste.txt")
 	defer csvfile.Close()

@@ -1,11 +1,19 @@
-# Base build image
-FROM golang:1.13.7 AS builder
-ENV GO111MODULE=on
-WORKDIR /dougaq/go/src/desafioneoway
-COPY [ "go.mod", "go.sum", "./" ]
-RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o main .
+FROM golang:1.10
 
-COPY --from=builder /dougaq/go/src/desafioneoway/main ./
-CMD [ "./main" ]
+# Set the Current Working Directory inside the container
+WORKDIR $GOPATH/src/github.com/dougadriquei/desafioneoway
+
+# Copy everything from the current directory to the PWD (Present Working Directory) inside the container
+COPY . .
+
+# Download all the dependencies
+RUN go get -d -v ./...
+
+# Install the package
+RUN go install -v ./...
+
+# This container exposes port 8080 to the outside world
+EXPOSE 8080
+
+# Run the executable
+CMD ["desafioneoway"]

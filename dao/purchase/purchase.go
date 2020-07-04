@@ -32,6 +32,7 @@ func CreatePurchases(purchases []model.Purchase) (bool, []error) {
 	db, err := sql.Open("postgres", storage.ConnectarBasePostgres())
 	if err != nil {
 		error = append(error, err)
+		return false, error
 	}
 	//sets the maximum number of open connections to the database.
 	db.SetMaxOpenConns(1)
@@ -57,8 +58,8 @@ func CreatePurchases(purchases []model.Purchase) (bool, []error) {
 			continue
 		}
 
-		private, _ := strconv.Atoi(purchase.Private)
-		incompleted, _ := strconv.Atoi(purchase.Incompleted)
+		// private, _ := strconv.Atoi(purchase.Private)
+		// incompleted, _ := strconv.Atoi(purchase.Incompleted)
 		averageTicket, _ := strconv.ParseFloat(strings.Replace(purchase.AverageTicket, ",", ".", 1), 32)
 		lastPurchaseTicket, _ := strconv.ParseFloat(strings.Replace(purchase.LastPurchaseTicket, ",", ".", 1), 32)
 		//Executa a query do insert purchase, que possui uma ID como retorno.
@@ -66,9 +67,9 @@ func CreatePurchases(purchases []model.Purchase) (bool, []error) {
 			//cpf_cnpj
 			cpfCnpj,
 			//private
-			private,
+			0,
 			//incompleted
-			incompleted,
+			0,
 			//last_purchase_date
 			NewNullString(lastPurchaseDate),
 			//average_ticket
@@ -77,13 +78,14 @@ func CreatePurchases(purchases []model.Purchase) (bool, []error) {
 			//last_purchase_ticket
 			NewNullFloat64(math.Round(lastPurchaseTicket*100)/100),
 			//most_frequent_store
-			NewNullString(mostFrequentStore),
+			NewNullString("mostFrequentStore"),
 			//last_purchase_store
 			NewNullString(lastPurchaseStore),
 		).Scan(&idpurchase)
 
 		if err != nil {
 			error = append(error, err)
+			return true, error
 		}
 
 		idPurchase, err := strconv.Atoi(idpurchase)
