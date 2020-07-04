@@ -1,12 +1,13 @@
 package readfile
 
 import (
-	model "desafioNeoway/model/purchase"
 	"encoding/csv"
 	"errors"
 	"io"
 	"os"
 	"strings"
+
+	model "github.com/dougadriquei/desafioneoway/model/purchase"
 )
 
 //ReadFile responsável por ler o arquivo .txt e criar o DTO Purchase

@@ -1,10 +1,11 @@
 package controller
 
 import (
-	dao "desafioNeoway/dao/purchase"
-	domain "desafioNeoway/domain/readfile"
-	"desafioNeoway/util"
 	"errors"
+
+	dao "github.com/dougadriquei/desafioneoway/dao/purchase"
+	domain "github.com/dougadriquei/desafioneoway/domain/readfile"
+	"github.com/dougadriquei/desafioneoway/util"
 )
 
 //ReadFileController controller do dominio

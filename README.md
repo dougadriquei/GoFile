@@ -1,4 +1,4 @@
-# desafioNeoway
+# desafioneoway
 
 
 ## Running
@@ -21,13 +21,13 @@ docker-compose up --build
 
 #### Development
 ```shell
-docker build -t desafioNeoway .
-docker run -p 8095:8095 --name desafioNeoway -it desafioNeoway
+docker build -t desafioneoway .
+docker run -p 8095:8095 --name desafioneoway -it desafioneoway
 ```
 
 ```shell
-docker stop desafioNeoway
-docker start desafioNeoway
+docker stop desafioneoway
+docker start desafioneoway
 ```
 
 ## Connecting throuhg PGAdmin

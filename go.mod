@@ -1,4 +1,4 @@
-module desafioNeoway
+module desafioneoway
 
 go 1.13
 

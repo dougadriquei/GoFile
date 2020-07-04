@@ -4,8 +4,9 @@ import (
 
 	//"read-pdf-go/controller"
 
-	"desafioNeoway/util"
 	"testing"
+
+	"github.com/dougadriquei/desafioneoway/util"
 
 	"github.com/stretchr/testify/assert"
 )

@@ -2,13 +2,14 @@ package purchase
 
 import (
 	"database/sql"
-	"desafioNeoway/dao/storage"
-	model "desafioNeoway/model/purchase"
 	"log"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/dougadriquei/desafioneoway/dao/storage"
+	model "github.com/dougadriquei/desafioneoway/model/purchase"
 
 	brdoc "github.com/Nhanderu/brdoc"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
