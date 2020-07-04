@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+  api:
+    container_name: desafioneoway
+    build: .
+    # env_file:
+    #   - .env-${env}
+    ports:
+      - "8095:8095"
+    depends_on:
+      - db
+    networks:
+      - desafioneoway_fullstack
+
+  db:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_postgres:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d/
+    networks:
+      - desafioneoway_fullstack
+
+  pgadmin:
+    container_name: desafioneoway_fullstack
+    image: dpage/pgadmin4
+    # env_file:
+    #   - postgres.env
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgress
+      PGADMIN_DEFAULT_PASSWORD: floripa@123
+    depends_on:
+      - db
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+      - ./db/pgadmin/servers.json:/pgadmin4/servers.json
+    ports:
+      - "8096:80"
+    networks:
+      - desafioneoway_fullstack
+    logging:
+      driver: none
+    restart: unless-stopped
+
+volumes:
+  db_postgres:
+  pgadmin:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  desafioneoway_fullstack:
+    driver: bridge
