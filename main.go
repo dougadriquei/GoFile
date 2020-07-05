@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/dougadriquei/desafioneoway/controller"
@@ -19,6 +20,7 @@ type result struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Passou 1")
 	pathFile := "test/base_teste.txt"
 	count, error := controller.ReadFileController(pathFile)
 	data := result{
