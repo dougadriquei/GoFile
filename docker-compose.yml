@@ -16,15 +16,18 @@ services:
 
 
   fullstack-postgres:
-    image: postgres:latest
+    image: postgres:11.3-alpine
     container_name: full_db_postgres
+    ports:
+      - 5434:5432
     environment:
-      PGADMIN_DEFAULT_USER: postgres
-      PGADMIN_DEFAULT_PASSWORD: floripa@123
-      PGADMIN_DEFAULT_DBNAME: postgress
-      PGADMIN_DEFAULT_HOST: fullstack-postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: floripa@123
+      POSTGRES_DBNAME: postgress
+      POSTGRES_HOST: fullstack-postgres
     volumes:
       - database_postgres:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - desafioneoway_fullstack
     

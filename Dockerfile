@@ -23,8 +23,18 @@ RUN go install -v ./...
 # Build the Go app
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
+
+
 # This container exposes port 8080 to the outside world
 EXPOSE 8191
-
-# Run the binary program produced by `go install`
 CMD ["./main"]
+
+FROM postgres:11.3-alpine as teste
+ADD . /docker-entrypoint-initdb.d
+COPY init.sql /docker-entrypoint-initdb.d/
+# Run the binary program produced by `go install`
+
+# FROM postgres
+# ENV POSTGRES_USER postgress
+# ENV POSTGRES_PASSWORD floripa@123
+# ENV POSTGRES_DB postgres
