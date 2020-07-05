@@ -7,7 +7,7 @@ import (
 //Desenvolvimento
 const (
 	Host = "localhost"
-	Port = "5434" /*docker:*/
+	Port = "5432" /*docker:*/
 	//Port     = "5432" /*local:*/
 	User     = "postgres"
 	Password = "floripa@123"

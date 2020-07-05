@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
 
 	"github.com/dougadriquei/desafioneoway/controller"
@@ -19,21 +19,24 @@ type result struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	count, error := controller.ReadFileController("test/base_teste.txt")
-	fmt.Fprintf(w, "Count: %v \n", count)
-	fmt.Fprintf(w, "Error: %v \n", fmt.Sprint(error))
-	if error != nil {
-		fmt.Fprintf(w, fmt.Sprint(error))
-		return
-	}
+	pathFile := "test/base_teste.txt"
+	count, error := controller.ReadFileController(pathFile)
 	data := result{
 		QuantityInserted: count,
 		Error:            error,
 	}
-	fmt.Fprintf(w, "A quantidade de registros inseridas é: %v\n", data)
+	js, err := json.Marshal(data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+
 }
 
 func main() {
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8095", nil)
+	http.ListenAndServe(":8191", nil)
 }

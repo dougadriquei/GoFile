@@ -1,50 +1,54 @@
+
 version: '3'
 services:
-
-  api:
+  app:
     container_name: desafioneoway
     build: .
-    ports:
-      - "8095:8095"
+    ports: 
+      - 8191:8191 
+    restart: on-failure
+    volumes:
+      - api:/usr/src/app/
     depends_on:
-      - db
+      - fullstack-postgres          
     networks:
-      - desafioneoway_fullstack
-    image: desafioneoway
+      - fullstack
 
-  db:
-    image: postgres
-    expose:
-      - 5434
+
+  fullstack-postgres:
+    image: postgres:latest
+    container_name: full_db_postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: floripa@123
-      POSTGRES_DB: postgres
-
+      - POSTGRES_USER= postgres  
+      - POSTGRES_PASSWORD=floripa@123
+      - POSTGRES_DB=postgres
+      - DATABASE_HOST=127.0.0.1"
+    ports:
+      - '5432:5432'
+    volumes:
+      - database_postgres:/var/lib/postgresql/data
+    networks:
+      - fullstack
+    
   pgadmin:
-    container_name: pdgdmin4
     image: dpage/pgadmin4
+    container_name: pgadmin_container
     environment:
-      PGADMIN_DEFAULT_EMAIL: postgress
+      PGADMIN_DEFAULT_EMAIL: postgres
       PGADMIN_DEFAULT_PASSWORD: floripa@123
     depends_on:
-      - db
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-      - ./db/pgadmin/servers.json:/pgadmin4/servers.json
+      - fullstack-postgres
     ports:
-      - "5434:5434"
+      - "5050:80"
     networks:
-      - desafioneoway_fullstack
-    logging:
-      driver: none
+      - fullstack
     restart: unless-stopped
 
 volumes:
-  db_postgres:
-  pgadmin:
+  api:
+  database_postgres:                  
 
 # Networks to be created to facilitate communication between containers
 networks:
-  desafioneoway_fullstack:
+  fullstack:
     driver: bridge

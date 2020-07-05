@@ -38,6 +38,11 @@ docker rm $(docker ps -a -q)
 docker rmi $(docker images -a -q)
 ```
 
+```shell
+docker build -t my-golang-app .
+docker-compose down --remove-orphans --volumes 
+```
+
 ## Reference
 
 - [Faster builds in Docker with Go 1.11](https://blog.container-solutions.com/faster-builds-in-docker-with-go-1-11)
