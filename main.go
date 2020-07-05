@@ -7,18 +7,33 @@ import (
 	"github.com/dougadriquei/desafioneoway/controller"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hi there, I am very keen on %s!", r.URL.Path[1:])
-	success, error := controller.ReadFileController()
-	fmt.Fprintf(w, "O status da leitura é:%v ", success)
-	if success {
-		return fmt.Fprintf(w, "\nsucesso")
-	}
+//TODO Melhorar handler, caso se transeformasse no padrão REST (token)
+//TODO Pegar file da request
+//TODO Utilizar variaveis de ambientes
+//TODO Criar aquivos temporários? os.tempfile
+//TODO melhorar imports do projeto. "github.com/
 
-	fmt.Fprintf(w, fmt.Sprint(error))
+type result struct {
+	QuantityInserted int     `json:"quantity_inserted,omitempty"`
+	Error            []error `json:"error,omitempty"`
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	count, error := controller.ReadFileController("test/base_teste.txt")
+	fmt.Fprintf(w, "Count: %v \n", count)
+	fmt.Fprintf(w, "Error: %v \n", fmt.Sprint(error))
+	if error != nil {
+		fmt.Fprintf(w, fmt.Sprint(error))
+		return
+	}
+	data := result{
+		QuantityInserted: count,
+		Error:            error,
+	}
+	fmt.Fprintf(w, "A quantidade de registros inseridas é: %v\n", data)
 }
 
 func main() {
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8095", nil)
 }

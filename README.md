@@ -1,5 +1,4 @@
-# desafioneoway
-
+# desafio Neoway
 
 ## Running
 
@@ -9,7 +8,6 @@
 docker-compose up
 
 docker-compose down
-docker-compose down --remove-orphans --volumes
 ```
 
 #### Local / Dev
@@ -22,18 +20,22 @@ docker-compose up --build
 #### Development
 ```shell
 docker build -t desafioneoway .
-docker run -p 8095:8095 --name desafioneoway -it desafioneoway
+
+Go to file storage.go (change port postgress local)
+
+docker run --publish 8080:8080 desafioneoway
 ```
 
 ```shell
 docker stop desafioneoway
+
 docker start desafioneoway
 ```
 
-## Connecting throuhg PGAdmin
 ```shell
-docker container ls
-docker inspect <postgres_image_id> | grep IPAddress
+utils:
+docker rm $(docker ps -a -q) 
+docker rmi $(docker images -a -q)
 ```
 
 ## Reference

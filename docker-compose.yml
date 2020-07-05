@@ -4,19 +4,18 @@ services:
   api:
     container_name: desafioneoway
     build: .
-    # env_file:
-    #   - .env-${env}
     ports:
-      - "8080:8080"
+      - "8095:8095"
     depends_on:
       - db
     networks:
       - desafioneoway_fullstack
+    image: desafioneoway
 
   db:
     image: postgres
     expose:
-      - 5432
+      - 5434
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: floripa@123
@@ -25,8 +24,6 @@ services:
   pgadmin:
     container_name: pdgdmin4
     image: dpage/pgadmin4
-    # env_file:
-    #   - postgres.env
     environment:
       PGADMIN_DEFAULT_EMAIL: postgress
       PGADMIN_DEFAULT_PASSWORD: floripa@123
@@ -36,7 +33,7 @@ services:
       - pgadmin:/var/lib/pgadmin
       - ./db/pgadmin/servers.json:/pgadmin4/servers.json
     ports:
-      - "8096:80"
+      - "5434:5434"
     networks:
       - desafioneoway_fullstack
     logging:

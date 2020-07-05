@@ -2,33 +2,34 @@ package controller
 
 import (
 	"errors"
-	"fmt"
 
-	dao "github.com/dougadriquei/desafioneoway/dao/purchase"
-	domain "github.com/dougadriquei/desafioneoway/domain/readfile"
-	"github.com/dougadriquei/desafioneoway/util"
+	domain "github.com/dougadriquei/desafioneoway/readfile"
+	dao "github.com/dougadriquei/desafioneoway/storage/purchase"
+	"github.com/dougadriquei/desafioneoway/utils"
 )
 
 //ReadFileController controller do dominio
-func ReadFileController() (bool, []error) {
+func ReadFileController(pathFile string) (int, []error) {
 	var error []error
-
-	fmt.Println("Passou 1")
 	//Faz a leitura do arquivo: base_teste.txt
-	csvfile := util.OpenFile("resource/base_teste.txt")
+	csvfile := utils.OpenFile(pathFile)
 	defer csvfile.Close()
 
 	//Varre cada linha do arquivo e captura um slice (array) das compras (purchases)
 	purchases, err := domain.ReadFile(csvfile)
 	if err != nil {
-		return false, err
+		return 0, err
 	}
 	//Verifica se a lista está vazia
 	if len(purchases) == 0 {
 		error = append(error, errors.New("Lista está vazia"))
-		return false, error
+		return 0, error
 	}
 	//Persiste todos os registros no Postgres
-	success, error := dao.CreatePurchases(purchases)
-	return success, error
+	count, err := dao.CreatePurchases(purchases)
+	if err != nil {
+		error = err
+		return count, error
+	}
+	return count, error
 }
