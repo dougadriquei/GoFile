@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.12-alpine
 
 RUN apk add --no-cache git
 
@@ -29,10 +29,10 @@ RUN CGO_ENABLED=0 go build -o main .
 EXPOSE 8191
 CMD ["./main"]
 
-FROM postgres:latest
-ADD . /docker-entrypoint-initdb.d
-COPY init.sql /docker-entrypoint-initdb.d/
-# Run the binary program produced by `go install`
+# FROM postgres:latest
+# ADD . /docker-entrypoint-initdb.d
+# COPY init.sql /docker-entrypoint-initdb.d/
+# # Run the binary program produced by `go install`
 
 # FROM postgres
 # ENV POSTGRES_USER postgress
