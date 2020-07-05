@@ -1,4 +1,4 @@
-FROM golang:1.12-alpine
+FROM golang:latest
 
 RUN apk add --no-cache git
 
@@ -21,7 +21,7 @@ RUN go install -v ./...
 # Build the Go app
 # RUN go build -o ./out/desafioneoway .
 # Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+RUN CGO_ENABLED=0 go build -o main .
 
 
 
@@ -29,7 +29,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 EXPOSE 8191
 CMD ["./main"]
 
-FROM postgres:11.3-alpine as teste
+FROM postgres:latest
 ADD . /docker-entrypoint-initdb.d
 COPY init.sql /docker-entrypoint-initdb.d/
 # Run the binary program produced by `go install`
