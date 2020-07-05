@@ -1,15 +1,4 @@
 
-FROM golang:1.14
-
-WORKDIR $GOPATH/src/github.com/dougadriquei/desafioneoway
-COPY . .
-
-RUN go get -d -v ./...
-RUN go install -v ./...
-
-
-
-
 # Start from golang base image
 FROM golang:alpine as builder
 
