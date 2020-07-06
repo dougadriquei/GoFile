@@ -2,7 +2,6 @@ package controller
 
 import (
 	"errors"
-	"fmt"
 
 	utils "github.com/dougadriquei/desafioneoway/utils"
 
@@ -28,7 +27,6 @@ func ReadFileController(pathFile string) (int, []error) {
 		return 0, error
 	}
 	//Persiste todos os registros no Postgres
-	fmt.Println("Passou 2")
 	count, err := dao.CreatePurchases(purchases)
 	if err != nil {
 		error = err

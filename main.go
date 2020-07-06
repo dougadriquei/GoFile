@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/dougadriquei/desafioneoway/controller"
@@ -13,6 +12,7 @@ import (
 //TODO Utilizar variaveis de ambientes
 //TODO Criar aquivos temporários? os.tempfile
 //TODO melhorar imports do projeto. "github.com/
+//TODO Implementar interfaces para desacoplar cada package do projeto
 
 type result struct {
 	QuantityInserted int     `json:"quantity_inserted,omitempty"`
@@ -20,7 +20,6 @@ type result struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Passou 1")
 	pathFile := "test/base_teste.txt"
 	count, error := controller.ReadFileController(pathFile)
 	data := result{

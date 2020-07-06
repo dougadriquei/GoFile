@@ -20,10 +20,14 @@ RUN go install -v ./...
 
 # Build the Go app
 # RUN go build -o ./out/desafioneoway .
-# Build the Go app
-RUN CGO_ENABLED=0 go build -o main .
+
+# Build the Go app - Windows
+# RUN CGO_ENABLED=0 go build -o main .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
 
+# COPY init.sql /docker-entrypoint-initdb.d/
 
 # This container exposes port 8080 to the outside world
 EXPOSE 8191
