@@ -2,7 +2,6 @@ package controller
 
 import (
 	"errors"
-	"fmt"
 
 	utils "github.com/dougadriquei/desafioneoway/utils"
 

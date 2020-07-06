@@ -6,9 +6,9 @@ import (
 
 //Desenvolvimento
 const (
-	Host = "fullstack-postgres"
-	Port = "5432" /*docker:*/
-	//Port     = "5432" /*local:*/
+	Host = "fullstack-postgres" /*docker:*/
+	//Host     = "localhost" /*local:*/
+	Port     = "5432"
 	User     = "postgres"
 	Password = "floripa@123"
 	Dbname   = "postgres"
