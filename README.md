@@ -1,5 +1,13 @@
 # desafio Neoway
 
+##  Informations
+
+### init.sql
+Script da entidade principal (Purchase) utilizada para represtar cada linha do arquivo.txt 
+
+### purchase.go
+Arquivo que tem as querys e o DTO (Pruchase struct)
+
 ## Running
 
 ### Docker Compose
