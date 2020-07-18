@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	domain "GoFile/readfile"
-	model "GoFile/storage/product"
+	daoStorage "GoFile/storage/product"
 	dao "GoFile/storage/purchase"
 	utils "GoFile/utils"
 )
@@ -38,11 +38,11 @@ func ReadFileController(pathFile string) (int, []error) {
 }
 
 //CreateProduct controller do dominio
-func CreateProduct(product model.Product) (int, []error) {
+func CreateProduct(product daoStorage.Product) (uint, []error) {
 	var error []error
-	count, err := CreateProduct(product)
+	count, err := daoStorage.CreateProduct(product)
 	if err != nil {
-		error = err
+		error = append(error, err)
 		return count, error
 	}
 	return count, error

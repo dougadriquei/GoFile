@@ -30,6 +30,7 @@ func NewHandler() http.Handler {
 type result struct {
 	QuantityInserted int     `json:"quantity_inserted,omitempty"`
 	Error            []error `json:"error,omitempty"`
+	ProductID        uint    `json:"quantity_inserted,omitempty"`
 }
 
 func (h *handler) Read(c *gin.Context) {
@@ -58,17 +59,17 @@ func (h *handler) PostProduct(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	count, error := controller.CreateProduct(p2)
+	productID, error := controller.CreateProduct(p2)
 	data := result{
-		QuantityInserted: count,
-		Error:            error,
+		ProductID: productID,
+		Error:     error,
 	}
 	js, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("Finalizou", count)
+	fmt.Println("Finalizou", productID)
 	fmt.Println("json", fmt.Sprintf("%v", js))
 	c.JSON(http.StatusOK, js)
 }
