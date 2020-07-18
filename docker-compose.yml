@@ -3,7 +3,7 @@ version: '3'
 services:
   #Service app
   app:
-    container_name: desafioneoway
+    container_name: GoFile
     build: .
     ports: 
       - 8191:8191 
@@ -13,7 +13,7 @@ services:
     depends_on:
       - fullstack-postgres          
     networks:
-      - desafioneoway_fullstack
+      - GoFile_fullstack
 
   #Service postgres
   fullstack-postgres:
@@ -30,7 +30,7 @@ services:
       - database_postgres:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - desafioneoway_fullstack
+      - GoFile_fullstack
     
   # pgadmin:
   #   image: dpage/pgadmin4
@@ -43,7 +43,7 @@ services:
   #   ports:
   #     - "5050:80"
   #   networks:
-  #     - desafioneoway_fullstack
+  #     - GoFile_fullstack
   #   restart: unless-stopped
 
 volumes:
@@ -52,5 +52,5 @@ volumes:
 
 # Networks to be created to facilitate communication between containers
 networks:
-  desafioneoway_fullstack:
+  GoFile_fullstack:
     driver: bridge

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 
-	"github.com/dougadriquei/desafioneoway/controller"
+	"github.com/dougadriquei/GoFile/http"
 )
 
 //TODO Melhorar handler, caso se transeformasse no padrão REST (token)
@@ -14,31 +14,12 @@ import (
 //TODO Criar aquivos temporários? os.tempfile
 //TODO melhorar imports do projeto. "github.com/
 
-type result struct {
-	QuantityInserted int     `json:"quantity_inserted,omitempty"`
-	Error            []error `json:"error,omitempty"`
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Passou 1")
-	pathFile := "test/base_teste.txt"
-	count, error := controller.ReadFileController(pathFile)
-	data := result{
-		QuantityInserted: count,
-		Error:            error,
-	}
-	js, err := json.Marshal(data)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(js)
-
-}
-
 func main() {
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8191", nil)
+	handler := http.NewHandler()
+	server := http.New(cfg.Server.Port, handler)
+	server.ListenAndServe()
+	stopChan := make(chan os.Signal)
+	signal.Notify(stopChan, syscall.SIGTERM, syscall.SIGINT)
+	<-stopChan
+	server.Shutdown()
 }

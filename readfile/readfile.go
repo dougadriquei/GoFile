@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	storage "github.com/dougadriquei/desafioneoway/storage/purchase"
+	storage "github.com/dougadriquei/GoFile/storage/purchase"
 )
 
 //ReadFile responsável por ler o arquivo .txt e criar o DTO Purchase

@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	brdoc "github.com/Nhanderu/brdoc"
-	"github.com/dougadriquei/desafioneoway/storage"
+	"github.com/dougadriquei/GoFile/storage"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 

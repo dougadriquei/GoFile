@@ -6,7 +6,7 @@ import (
 
 	"testing"
 
-	"github.com/dougadriquei/desafioneoway/utils"
+	"github.com/dougadriquei/GoFile/utils"
 	"github.com/stretchr/testify/assert"
 )
 

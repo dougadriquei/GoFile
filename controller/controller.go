@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	utils "github.com/dougadriquei/desafioneoway/utils"
+	utils "github.com/dougadriquei/GoFile/utils"
 
-	domain "github.com/dougadriquei/desafioneoway/readfile"
-	dao "github.com/dougadriquei/desafioneoway/storage/purchase"
+	domain "github.com/dougadriquei/GoFile/readfile"
+	dao "github.com/dougadriquei/GoFile/storage/purchase"
 )
 
 //ReadFileController controller do dominio

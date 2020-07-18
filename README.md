@@ -19,17 +19,17 @@ docker-compose up --build
 
 #### Development
 ```shell
-docker build -t desafioneoway .
+docker build -t GoFile .
 
 Go to file storage.go (change port postgress local)
 
-docker run --publish 8080:8080 desafioneoway
+docker run --publish 8080:8080 GoFile
 ```
 
 ```shell
-docker stop desafioneoway
+docker stop GoFile
 
-docker start desafioneoway
+docker start GoFile
 ```
 
 ```shell
