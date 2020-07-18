@@ -4,10 +4,10 @@ import (
 	"errors"
 	"fmt"
 
-	utils "github.com/dougadriquei/GoFile/utils"
-
-	domain "github.com/dougadriquei/GoFile/readfile"
-	dao "github.com/dougadriquei/GoFile/storage/purchase"
+	domain "GoFile/readfile"
+	model "GoFile/storage/product"
+	dao "GoFile/storage/purchase"
+	utils "GoFile/utils"
 )
 
 //ReadFileController controller do dominio
@@ -30,6 +30,17 @@ func ReadFileController(pathFile string) (int, []error) {
 	//Persiste todos os registros no Postgres
 	fmt.Println("Passou 2")
 	count, err := dao.CreatePurchases(purchases)
+	if err != nil {
+		error = err
+		return count, error
+	}
+	return count, error
+}
+
+//CreateProduct controller do dominio
+func CreateProduct(product model.Product) (int, []error) {
+	var error []error
+	count, err := CreateProduct(product)
 	if err != nil {
 		error = err
 		return count, error

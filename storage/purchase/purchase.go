@@ -2,14 +2,14 @@ package purchase
 
 import (
 	"database/sql"
-	"fmt"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
 
+	"GoFile/storage"
+
 	brdoc "github.com/Nhanderu/brdoc"
-	"github.com/dougadriquei/GoFile/storage"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -45,14 +45,11 @@ func isValidCnpj(value string) bool {
 func CreatePurchases(purchases []Purchase) (int, []error) {
 	var error []error
 	numberRecordsUnserted := 0
-	fmt.Println("Passou 3")
 	db, err := sql.Open("postgres", storage.ConnectarBasePostgres())
 	if err != nil {
 		error = append(error, err)
 		return 0, error
 	}
-	fmt.Println("ERRO", err)
-	fmt.Println("Passou 4")
 	//sets the maximum number of open connections to the database.
 	db.SetMaxOpenConns(1)
 	//sets the maximum number of connections in the idle connection pool.
@@ -83,7 +80,6 @@ func CreatePurchases(purchases []Purchase) (int, []error) {
 		incompleted, _ := strconv.Atoi(purchase.Incompleted)
 		averageTicket, _ := strconv.ParseFloat(strings.Replace(purchase.AverageTicket, ",", ".", 1), 32)
 		lastPurchaseTicket, _ := strconv.ParseFloat(strings.Replace(purchase.LastPurchaseTicket, ",", ".", 1), 32)
-		fmt.Println("Passou 5")
 		//Executa a query do insert purchase, que possui uma ID como retorno.
 		err = db.QueryRow(psqlInsert,
 			//cpf_cnpj
@@ -103,14 +99,10 @@ func CreatePurchases(purchases []Purchase) (int, []error) {
 			//last_purchase_store
 			NewNullString(lastPurchaseStore),
 		).Scan(&idpurchase)
-		fmt.Println("Passou 6")
 		if err != nil {
-			fmt.Println("Passou 7")
-			fmt.Println("ERRO", err)
 			error = append(error, err)
 			return 0, error
 		}
-		fmt.Println("Passou 8")
 
 		idPurchase, err := strconv.Atoi(idpurchase)
 		//Verifica se o registro foi persistido no postgres

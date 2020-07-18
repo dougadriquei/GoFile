@@ -6,7 +6,8 @@ import (
 
 	"testing"
 
-	"github.com/dougadriquei/GoFile/utils"
+	"GoFile/utils"
+
 	"github.com/stretchr/testify/assert"
 )
 

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
+	model "GoFile/storage/product"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -48,10 +50,34 @@ func (h *handler) Read(c *gin.Context) {
 	c.JSON(http.StatusOK, js)
 }
 
+func (h *handler) PostProduct(c *gin.Context) {
+	fmt.Println("Passou 1")
+	var p2 model.Product
+	decoder := json.NewDecoder(c.Request.Body)
+	err := decoder.Decode(&p2)
+	if err != nil {
+		panic(err)
+	}
+	count, error := controller.CreateProduct(p2)
+	data := result{
+		QuantityInserted: count,
+		Error:            error,
+	}
+	js, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("Finalizou", count)
+	fmt.Println("json", fmt.Sprintf("%v", js))
+	c.JSON(http.StatusOK, js)
+}
+
 //SetRoutesApp seta configuração das rotas
 func SetRoutesApp(router *gin.Engine, handler *handler) *gin.Engine {
 	v1 := router.Group("/api/v1")
-	v1.GET("/read", handler.Read)
+	v1.POST("/read", handler.Read)
+	v1.POST("/product", handler.PostProduct)
 	return router
 }
 

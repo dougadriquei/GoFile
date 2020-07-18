@@ -6,7 +6,7 @@ import (
 
 //Desenvolvimento
 const (
-	Host = "fullstack-postgres"
+	Host = "localhost"
 	Port = "5432" /*docker:*/
 	//Port     = "5432" /*local:*/
 	User     = "postgres"
